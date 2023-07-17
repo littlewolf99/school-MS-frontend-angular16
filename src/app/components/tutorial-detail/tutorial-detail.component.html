@@ -1,0 +1,136 @@
+<div *ngIf="viewMode; else editable" class="detail-view">
+  <div *ngIf="currentTutorial.studentId">
+    <div>
+      <label><strong>Name:</strong></label> {{ currentTutorial.studentName }}
+    </div>
+    <div>
+      <label><strong>Gender:</strong></label>
+      {{ currentTutorial.studentGender ? "Female" : "Male" }}
+    </div>
+    <div>
+      <label><strong>Title:</strong></label> {{ currentTutorial.studentTitle }}
+    </div>
+    <div>
+      <label><strong>Description:</strong></label>
+      {{ currentTutorial.studentDescription }}
+    </div>
+    <div>
+      <label><strong>Status:</strong></label>
+      {{ currentTutorial.published ? "Published" : "Pending" }}
+    </div>
+
+    <a
+      class="btn btn-sm btn-warning px-3"
+      routerLink="/tutorials/{{ currentTutorial.studentId }}"
+    >
+      <fa-icon [icon]="faPenClip"></fa-icon>
+      <span class="pl-2">Edit</span>
+    </a>
+    <br />
+    <br />
+  </div>
+  <div *ngIf="!currentTutorial.studentTitle">
+    <p>Please click on a <strong>Student</strong>...</p>
+  </div>
+</div>
+
+<ng-template #editable>
+  <div *ngIf="currentTutorial.studentId" class="edit-form">
+    <h4>Tutorial</h4>
+    <form>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          required
+          [(ngModel)]="currentTutorial.studentTitle"
+          name="title"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          required
+          [(ngModel)]="currentTutorial.studentName"
+          name="name"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select
+          class="form-control"
+          id="gender"
+          required
+          [(ngModel)]="currentTutorial.studentGender"
+          name="gender"
+        >
+          <option value="null" disabled>Select Gender</option>
+          <option
+            *ngFor="let gender of genderlist"
+            [selected]="currentTutorial.studentGender === gender.id"
+            [value]="gender.id"
+          >
+            {{ gender.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          required
+          [(ngModel)]="currentTutorial.studentDescription"
+          name="description"
+        />
+      </div>
+
+      <div class="form-gruop">
+        <label><strong>Status:</strong></label>
+        {{ currentTutorial.published ? "Published" : "Pending" }}
+      </div>
+    </form>
+
+    <button
+      class="badge badge-primary mr-2"
+      *ngIf="currentTutorial.published"
+      (click)="updatePublished(false)"
+    >
+      UnPublish
+    </button>
+    <button
+      class="badge badge-primary mr-2"
+      *ngIf="!currentTutorial.published"
+      (click)="updatePublished(true)"
+    >
+      Publish
+    </button>
+
+    <button class="badge badge-danger mr-2" (click)="deleteTutorial()">
+      Delete
+    </button>
+
+    <button
+      class="badge badge-success mb-2"
+      type="submit"
+      (click)="updateTutorial()"
+    >
+      Update
+    </button>
+    <p>{{ message }}</p>
+  </div>
+
+  <div *ngIf="!currentTutorial.studentId">
+    <br />
+    <p>Cannot access this <b>Student</b>...</p>
+  </div>
+</ng-template>

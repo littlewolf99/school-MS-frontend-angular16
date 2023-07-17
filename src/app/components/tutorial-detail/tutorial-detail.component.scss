@@ -1,0 +1,11 @@
+.edit-form {
+  max-width: 600px;
+  margin: auto;
+}
+
+.detail-view {
+  border: solid 1px #ddd;
+  padding: 20px 20px;
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+}

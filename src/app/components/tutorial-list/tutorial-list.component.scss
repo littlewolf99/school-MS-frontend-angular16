@@ -1,0 +1,10 @@
+li {
+  cursor: pointer;
+}
+
+.list-view {
+  border: solid 1px #ddd;
+  padding: 20px 20px;
+  height: calc(100vh - 245px);
+  overflow-y: auto;
+}
